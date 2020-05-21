@@ -1,0 +1,29 @@
+test_name: Test Get Blog by ID
+
+stages:
+  - name: authen to get token
+    request:
+      url: http://localhost:8081/authenticate
+      json:
+        username: TestDataClass@gmail.com
+        password: Abcd12345#
+      method: POST
+    response:
+      status_code: 200
+      save:
+        json:
+          saved_token: token
+
+  - name: Make sure return status 200 with id, title, content of the blog
+    request:
+      url: http://localhost:8081/blog/2
+      method: GET
+      headers:
+        content-type: application/json
+        Authorization: "{saved_token:s}"
+    response:
+      status_code: 200
+      json:
+        id: 2
+        title: automationSharingPython
+        content: automationSharingPython

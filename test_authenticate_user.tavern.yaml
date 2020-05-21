@@ -1,0 +1,22 @@
+test_name: Test Authenticate API
+
+stages:
+  - name: Make sure return status 200 if user credential is correct
+    request:
+      url: http://localhost:8081/authenticate
+      json:
+        username: TestDataClass@gmail.com
+        password: Abcd12345#
+      method: POST
+    response:
+      status_code: 200
+
+  - name: Make sure return status 401 if user credential is incorrect
+    request:
+      url: http://localhost:8081/authenticate
+      json:
+        username: TestDataClass@gmail.com
+        password: Wrong password
+      method: POST
+    response:
+      status_code: 401
